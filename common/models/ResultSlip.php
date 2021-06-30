@@ -15,14 +15,14 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property Register $register
  */
-class PaymentSlip extends \yii\db\ActiveRecord
+class ResultSlip extends \yii\db\ActiveRecord
 {
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'payment_slip';
+        return 'result_slip';
     }
     public function behaviors() {
         return [

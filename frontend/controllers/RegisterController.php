@@ -363,7 +363,7 @@ class RegisterController extends Controller {
                         Yii::$app->webTools->CreateDir('uploads/result');
                         $path = 'uploads/result/result_' . time() . '.' . $ext;
                         echo $path;
-                    //     if ($inputFile->saveAs(Yii::getAlias('@frontend') . '/web/' . $path)) {
+                         if ($inputFile->saveAs(Yii::getAlias('@frontend') . '/web/' . $path)) {
                     //         $result = new ResultSlip();
                     //         $result->register_id = $regis->id;
                     //         $result->path = $path;
@@ -375,7 +375,7 @@ class RegisterController extends Controller {
                     //                         'regis' => $regis,
                     //             ]);
                     //         }
-                    //     }
+                               }
                      }
 
             }else{
