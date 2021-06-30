@@ -6,6 +6,7 @@ use common\models\Register;
 use common\models\VerifyForm;
 use common\models\PaymentStatus;
 use common\models\PaymentSlip;
+use common\models\ResultSlip;
 use common\models\Group;
 use common\models\Shirt;
 use common\models\Category;
@@ -364,17 +365,17 @@ class RegisterController extends Controller {
                         $path = 'uploads/result/result_' . time() . '.' . $ext;
                         echo $path;
                          if ($inputFile->saveAs(Yii::getAlias('@frontend') . '/web/' . $path)) {
-                    //         $result = new ResultSlip();
-                    //         $result->register_id = $regis->id;
-                    //         $result->path = $path;
-                    //         if ($result->save()) {
-                    //             PaymentStatus::AddStatus($regis->id,PaymentStatus::STATUS_WAIT_FOR_CHECK_PAYMENT);
-                    //             return $this->render('success_payment', [
-                    //                         'model' => $model,
-                    //                         'payment' => $payment,
-                    //                         'regis' => $regis,
-                    //             ]);
-                    //         }
+                            $result = new ResultSlip();
+                            $result->register_id = $regis->id;
+                            $result->path = $path;
+                            if ($result->save()) {
+                                //PaymentStatus::AddStatus($regis->id,PaymentStatus::STATUS_WAIT_FOR_CHECK_PAYMENT);
+                                return $this->render('success_payment', [
+                                            'model' => $model,
+                                            'payment' => $result,
+                                            'regis' => $regis,
+                                ]);
+                            }
                                }
                      }
 

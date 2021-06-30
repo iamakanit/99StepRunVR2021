@@ -22,7 +22,7 @@ class ResultSlip extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'result_slip';
+        return 'results_slip';
     }
     public function behaviors() {
         return [
