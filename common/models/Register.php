@@ -320,6 +320,16 @@ class Register extends \yii\db\ActiveRecord
         return PaymentSlip::findOne(PaymentSlip::find()->where(['register_id' => $this->id])->max('id'));
     }
 
+    public function getResultSlip()
+    {
+        return $this->hasMany(ResultSlip::className(), ['register_id' => 'id']);
+    }
+
+    public function getLastResultSlip()
+    {
+        return ResultSlip::find(ResultSlip::find()->where(['register_id' => $this->id]));
+    }
+
     public function getAddress()
     {
         return PaymentSlip::findOne(PaymentSlip::find()->where(['register_id' => $this->id])->max('id'));

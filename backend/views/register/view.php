@@ -143,8 +143,7 @@ $this->params['breadcrumbs'][] = $this->title;
            		  <?php $ext = explode(".",$model->lastPaymentSlip->path); if(in_array(end($ext),['png', 'jpg', 'gif', 'bmp', 'jpeg', 'PNG', 'JPG', 'GIF', 'BMP'])): ?>
                     <p class="bg-info text-info lead" style="padding: 10px 30px; margin-bottom: 3px;">
                       <?= Html::a(Html::img(str_replace('/backend', '',Url::base(true)).'/'.$model->lastPaymentSlip->path,['class' => 'img-rounded', 'style' => 'max-height: 80px;']),'',['class' => 'modal-pic','value' => str_replace('/backend', '',Url::base(true)).'/'.$model->lastPaymentSlip->path]) ?>
-                      &nbsp;
-                      รูปภาพหลักฐานการโอนเงิน
+
                     </p>
                   <?php else: ?>
                     <p class="bg-info text-info lead" style="padding: 5px 30px; margin-bottom: 3px;">
@@ -213,22 +212,25 @@ $this->params['breadcrumbs'][] = $this->title;
         <span class="fa fa-credit-card"></span>
         ผลการวิ่ง
       </h3>
-
+          <?php foreach ($model->paymentStatuses as $key => $paymentStatus): ?>
+            <?php if ($key+1 == count($model->paymentStatuses) && $model->lastPaymentStatus->isArrayFinishUpload ): ?>
           <p class="bg-info text-info lead" style="padding: 10px 30px; margin-bottom: 3px;">
-            <?= Html::a(Html::img(str_replace('/backend', '',Url::base(true)).'/'.$model->ResultSlip->path,['class' => 'img-rounded', 'style' => 'max-height: 80px;']),'',['class' => 'modal-pic','value' => str_replace('/backend', '',Url::base(true)).'/'.$model->lastPaymentSlip->path]) ?>
-            &nbsp;
-            รูปภาพหลักฐานการโอนเงิน
+            <?= Html::a(Html::img(str_replace('/backend', '',Url::base(true)).'/'.$model->lastResultSlip->path,['class' => 'img-rounded', 'style' => 'max-height: 80px;']),'',['class' => 'modal-pic','value' => str_replace('/backend', '',Url::base(true)).'/'.$model->lastPaymentSlip->path]) ?>
           </p>
           <p class="bg-info text-info lead" style="padding: 5px 30px; margin-bottom: 3px;">
-            <?= Html::a('<span class="fa fa-file"></span> ไฟล์รูปภาพหลักฐานการโอนเงิน', ['loadpaymentfile', 'id' => $model->lastPaymentSlip->id], [
-              'target' => '_blank',
-              'title' => 'Payment Slip File',
-              'data' => [
-                'method' => 'post',
-              ],
-              ]) ?>
+            <!-- <?//= Html::a('<span class="fa fa-file"></span> รูปภาพผลการวิ่ง', ['loadpaymentfile', 'id' => $model->lastPaymentSlip->id], [
+              //'target' => '_blank',
+              //'title' => 'Payment Slip File',
+              //'data' => [
+              //  'method' => 'post',
+              //],
+              ]) ?> -->
           </p>
     </div>
+                  <?php else: ?>
+
+                      <?php endif; ?>
+                                    <?php endforeach; ?>
     <?php
         Modal::begin([
             'header' => '<h4 id="modalHeader" class="text-primary" style="margin-top: 0px; margin-bottom: 0px;"></h4>',
