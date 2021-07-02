@@ -16,7 +16,7 @@ use yii\behaviors\TimestampBehavior;
  *
  * @property Register $register
  */
-class PaymentStatus extends \yii\db\ActiveRecord
+class ResultStatus extends \yii\db\ActiveRecord
 {
   public $max_id;
   const STATUS_WAIT_FOR_PAY = 10;
@@ -33,7 +33,7 @@ class PaymentStatus extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'payment_status';
+        return 'result_status';
     }
     public function behaviors() {
         return [

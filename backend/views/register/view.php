@@ -5,6 +5,7 @@ use yii\widgets\DetailView;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
 
+
 $this->registerJs("
 $('.modal-pic').click(function(){
     $('#modalContent').html('<h3 class=\"text-center\"><span class=\"fa fa-spinner\"></span> Loading...</h3>');
@@ -138,7 +139,7 @@ $this->params['breadcrumbs'][] = $this->title;
           <div class="panel-body" style="padding-bottom: 5px;">
             <?php if($model->isMoneyTransfer): ?>
               <?php foreach ($model->paymentStatuses as $key => $paymentStatus): ?>
-                <?php if ($key+1 == count($model->paymentStatuses) && $model->lastPaymentStatus->isArrayFinishUpload ): ?>
+                <?php echo $key+1; if ($key+1 == count($model->paymentStatuses) && $model->lastPaymentStatus->isArrayFinishUpload ): ?>
                   <?php // if (in_array(end((explode(".", $model->lastPaymentSlip->path))), ['png', 'jpg', 'gif', 'bmp', 'jpeg', 'PNG', 'JPG', 'GIF', 'BMP'])): ?>
            		  <?php $ext = explode(".",$model->lastPaymentSlip->path); if(in_array(end($ext),['png', 'jpg', 'gif', 'bmp', 'jpeg', 'PNG', 'JPG', 'GIF', 'BMP'])): ?>
                     <p class="bg-info text-info lead" style="padding: 10px 30px; margin-bottom: 3px;">
@@ -212,25 +213,20 @@ $this->params['breadcrumbs'][] = $this->title;
         <span class="fa fa-credit-card"></span>
         ผลการวิ่ง
       </h3>
-          <?php foreach ($model->paymentStatuses as $key => $paymentStatus): ?>
-            <?php if ($key+1 == count($model->paymentStatuses) && $model->lastPaymentStatus->isArrayFinishUpload ): ?>
-          <p class="bg-info text-info lead" style="padding: 10px 30px; margin-bottom: 3px;">
-            <?= Html::a(Html::img(str_replace('/backend', '',Url::base(true)).'/'.$model->lastResultSlip->path,['class' => 'img-rounded', 'style' => 'max-height: 80px;']),'',['class' => 'modal-pic','value' => str_replace('/backend', '',Url::base(true)).'/'.$model->lastPaymentSlip->path]) ?>
-          </p>
-          <p class="bg-info text-info lead" style="padding: 5px 30px; margin-bottom: 3px;">
-            <!-- <?//= Html::a('<span class="fa fa-file"></span> รูปภาพผลการวิ่ง', ['loadpaymentfile', 'id' => $model->lastPaymentSlip->id], [
-              //'target' => '_blank',
-              //'title' => 'Payment Slip File',
-              //'data' => [
-              //  'method' => 'post',
-              //],
-              ]) ?> -->
-          </p>
-    </div>
-                  <?php else: ?>
 
-                      <?php endif; ?>
-                                    <?php endforeach; ?>
+
+       <?php foreach ($model->resultSlips as $key => $ResultSlips):?>
+         <?php //echo $ResultSlips->path; ?>
+            <p class="bg-info text-info lead" style="padding: 10px 30px; margin-bottom: 3px;">
+              <?= Html::a(Html::img(str_replace('/backend', '',Url::base(true)).'/'.$ResultSlips->path,['class' => 'img-rounded', 'style' => 'max-height: 80px;']),'',['class' => 'modal-pic','value' => str_replace('/backend', '',Url::base(true)).'/'.$ResultSlips->path]) ?>
+            </p>
+                  <span class="fa fa-calendar"></span>
+            <?= Yii::$app->thaiFormatter->asDateTime($ResultSlips->created_at, 'medium') ?>
+          </small>
+        </p>
+      <?php endforeach; ?>
+    </div>
+
     <?php
         Modal::begin([
             'header' => '<h4 id="modalHeader" class="text-primary" style="margin-top: 0px; margin-bottom: 0px;"></h4>',

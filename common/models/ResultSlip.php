@@ -69,4 +69,6 @@ class ResultSlip extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Register::className(), ['id' => 'register_id']);
     }
+
+
 }
