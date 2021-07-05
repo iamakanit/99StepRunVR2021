@@ -12,6 +12,7 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $register_id
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $result
  *
  * @property Register $register
  */
@@ -37,7 +38,7 @@ class ResultSlip extends \yii\db\ActiveRecord
     {
         return [
             [['path',],'safe'],
-            [['register_id', 'created_at', 'updated_at'], 'integer'],
+            [['register_id', 'created_at', 'updated_at', 'result'], 'integer'],
             [['register_id'], 'exist', 'skipOnError' => true, 'targetClass' => Register::className(), 'targetAttribute' => ['register_id' => 'id']],
         ];
     }
@@ -53,6 +54,7 @@ class ResultSlip extends \yii\db\ActiveRecord
             'register_id' => 'Register',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+            'result' => 'ระยะวิ่ง',
         ];
     }
 
@@ -65,6 +67,7 @@ class ResultSlip extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+
     public function getRegister()
     {
         return $this->hasOne(Register::className(), ['id' => 'register_id']);

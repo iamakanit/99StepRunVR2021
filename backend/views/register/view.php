@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 
 
 $this->registerJs("
@@ -114,13 +115,13 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
         </div>
         <div class="pull-right">
-          <?= Html::a('<span class="fa fa-trash" aria-hidden="true"></span> ซ่อนผู้ลงทะเบียน',['pending','id' => $model->id],[
-            'class' => 'btn btn-danger btn-xs',
-            'data' => [
-                'confirm' => 'โปรดยืนยันการ ซ่อนข้อมูลผู้ลงทะเบียนชื่อ '.$model->fullname.' โดยผู้ลงทะเบียนจะไม่เห็นข้อมูลการลงทะเบียน',
-                'method' => 'post',
-            ],
-        ]) ?>
+          <!-- <?//= Html::a('<span class="fa fa-trash" aria-hidden="true"></span> ซ่อนผู้ลงทะเบียน',['pending','id' => $model->id],[
+            //'class' => 'btn btn-danger btn-xs',
+            //'data' => [
+            //    'confirm' => 'โปรดยืนยันการ ซ่อนข้อมูลผู้ลงทะเบียนชื่อ '.$model->fullname.' โดยผู้ลงทะเบียนจะไม่เห็นข้อมูลการลงทะเบียน',
+            //    'method' => 'post',
+            //],
+        //]) ?> -->
           <?= Html::a('<span class="fa fa-trash" aria-hidden="true"></span> ยกเลิกการทะเบียน',['delete','id' => $model->id],[
             'class' => 'btn btn-danger btn-xs',
             'data' => [
@@ -139,7 +140,7 @@ $this->params['breadcrumbs'][] = $this->title;
           <div class="panel-body" style="padding-bottom: 5px;">
             <?php if($model->isMoneyTransfer): ?>
               <?php foreach ($model->paymentStatuses as $key => $paymentStatus): ?>
-                <?php echo $key+1; if ($key+1 == count($model->paymentStatuses) && $model->lastPaymentStatus->isArrayFinishUpload ): ?>
+                <?php if ($key+1 == count($model->paymentStatuses) && $model->lastPaymentStatus->isArrayFinishUpload ): ?>
                   <?php // if (in_array(end((explode(".", $model->lastPaymentSlip->path))), ['png', 'jpg', 'gif', 'bmp', 'jpeg', 'PNG', 'JPG', 'GIF', 'BMP'])): ?>
            		  <?php $ext = explode(".",$model->lastPaymentSlip->path); if(in_array(end($ext),['png', 'jpg', 'gif', 'bmp', 'jpeg', 'PNG', 'JPG', 'GIF', 'BMP'])): ?>
                     <p class="bg-info text-info lead" style="padding: 10px 30px; margin-bottom: 3px;">
@@ -204,28 +205,30 @@ $this->params['breadcrumbs'][] = $this->title;
             <?php endif; ?>
           </div>
         </div>
-
-
       </div>
     </div>
-    <div class="col-lg-12 col-md-12">
+      <div class="col-lg-12 col-md-12">
       <h3>
         <span class="fa fa-credit-card"></span>
         ผลการวิ่ง
       </h3>
+    <?php foreach ($model->resultSlips as $key => $ResultSlips):?>
 
+        <div class="col-lg-6 col-md-6">
+          <span class="fa fa-calendar"></span> <?= Yii::$app->thaiFormatter->asDateTime($ResultSlips->created_at, 'medium') ?><br>
+        <?= Html::a(Html::img(str_replace('/backend', '',Url::base(true)).'/'.$ResultSlips->path,['class' => 'img-rounded', 'style' => 'max-height: 120px;']),'',['class' => 'modal-pic','value' => str_replace('/backend', '',Url::base(true)).'/'.$ResultSlips->path]) ?>
 
-       <?php foreach ($model->resultSlips as $key => $ResultSlips):?>
-         <?php //echo $ResultSlips->path; ?>
-            <p class="bg-info text-info lead" style="padding: 10px 30px; margin-bottom: 3px;">
-              <?= Html::a(Html::img(str_replace('/backend', '',Url::base(true)).'/'.$ResultSlips->path,['class' => 'img-rounded', 'style' => 'max-height: 80px;']),'',['class' => 'modal-pic','value' => str_replace('/backend', '',Url::base(true)).'/'.$ResultSlips->path]) ?>
-            </p>
-                  <span class="fa fa-calendar"></span>
-            <?= Yii::$app->thaiFormatter->asDateTime($ResultSlips->created_at, 'medium') ?>
-          </small>
-        </p>
-      <?php endforeach; ?>
-    </div>
+        </div>
+        <div class="col-lg-6 col-md-6">
+        <?php
+          $form = ActiveForm::begin();
+          echo $form->field($ResultSlips, 'result')->textInput();
+          echo Html::submitButton('<span class="fa fa-save"></span> บันทึก', ['value' => 'recresult', 'name' => 'action', 'class' => 'btn btn-success btn-lg']);
+          ActiveForm::end();
+       ?>
+      </div>
+     </div>
+    <?php endforeach; ?>
 
     <?php
         Modal::begin([
