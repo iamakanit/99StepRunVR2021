@@ -73,5 +73,16 @@ class ResultSlip extends \yii\db\ActiveRecord
         return $this->hasOne(Register::className(), ['id' => 'register_id']);
     }
 
+    public function RecResult($id,$status){
+        $resultSlip = new self();
+        $resultSlip->id = $id;
+        $resultSlip->result = $result;
+        return $resultSlip->save();
+    }
+
+    public function CountResult($id){
+        
+    }
+
 
 }

@@ -183,15 +183,7 @@ class Register extends \yii\db\ActiveRecord
         $this->delete();
     }
 
-    public function Pending(){
-        foreach ($this->paymentStatuses as $paymentStatus) {
-            $paymentStatus->delete();
-        }
-        foreach ($this->paymentSlips as $paymentSlip) {
-            $paymentSlip->fullDelete();
-        }
-        $this->delete();
-    }
+
 
     /*    public static function findByEmail($email,$id_card)
         {
