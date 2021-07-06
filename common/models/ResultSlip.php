@@ -39,7 +39,7 @@ class ResultSlip extends \yii\db\ActiveRecord
         return [
             [['path',],'safe'],
             [['register_id', 'created_at', 'updated_at'], 'integer'],
-            [[ 'result'], 'number'],
+            [['result'], 'number'],
             [['register_id'], 'exist', 'skipOnError' => true, 'targetClass' => Register::className(), 'targetAttribute' => ['register_id' => 'id']],
         ];
     }

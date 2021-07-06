@@ -210,7 +210,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="col-lg-12 col-md-12">
       <h3>
-        <span class="fa fa-credit-card"></span>
+        <span class="fas fa-running"></span>
           ระยะการวิ่งรวม <?php echo $model->sumResult; ?> กิโลเมตร
       </h3>
         <?php foreach ($model->resultSlips as $key => $ResultSlips):?>

@@ -347,49 +347,48 @@ class RegisterController extends Controller {
      */
     public function actionResults()
     {
-        $session = new Session;
-        $model = new ResultSlipForm();
-        $modelVerify = new VerifyForm();
+      $session = new Session;
+      $model = new ResultSlipForm();
+      $modelVerify = new VerifyForm();
 
-        if ($model->load(Yii::$app->request->post()) && $modelVerify->load(Yii::$app->request->post()) && $modelVerify->validate()) {
-            $model->id_card = str_replace('-', '', $model->id_card);
-            //if(($regis = Register::findByEmail($model->email,$model->id_card)) !== null){
-              if(($regis = Register::findByEmail($model->email,$model->tel)) !== null){
-                Yii::$app->session->setFlash('danger', '<span class="fa fa-close" aria-hidden="true"></span>&nbsp;&nbsp; Ready to upload');
-
-                    $inputFile = UploadedFile::getInstance($model, 'file');
-                    if ($inputFile) {
-                        $tmp = explode('.', $inputFile->name);
-                        $ext = end($tmp);
-                        Yii::$app->webTools->CreateDir('uploads/result');
-                        $path = 'uploads/result/result_' . time() . '.' . $ext;
-                        echo $path;
-                         if ($inputFile->saveAs(Yii::getAlias('@frontend') . '/web/' . $path)) {
-                            $result = new ResultSlip();
-                            $result->register_id = $regis->id;
-                            $result->path = $path;
-                            if ($result->save()) {
-                                //PaymentStatus::AddStatus($regis->id,PaymentStatus::STATUS_WAIT_FOR_CHECK_PAYMENT);
-                                return $this->render('success_payment', [
-                                            'model' => $model,
-                                            'payment' => $result,
-                                            'regis' => $regis,
-                                ]);
-                            }
-                               }
-                     }
-
-            }else{
-                Yii::$app->session->setFlash('danger', '<span class="fa fa-close" aria-hidden="true"></span>&nbsp;&nbsp; ไม่พบข้อมูลผู้ลงทะเบียนในระบบ');
+      if($model->load(Yii::$app->request->post()) && $modelVerify->load(Yii::$app->request->post()) && $modelVerify->validate())
+      {
+        $model->id_card = str_replace('-', '', $model->id_card);
+          //if(($regis = Register::findByEmail($model->email,$model->id_card)) !== null){
+          if(($regis = Register::findByEmail($model->email,$model->tel)) !== null)
+          {
+              //Yii::$app->session->setFlash('danger', '<span class="fa fa-close" aria-hidden="true"></span>&nbsp;&nbsp; Ready to upload');
+            $inputFile = UploadedFile::getInstance($model, 'file');
+            if($inputFile)
+            {
+              $tmp = explode('.', $inputFile->name);
+              $ext = end($tmp);
+              Yii::$app->webTools->CreateDir('uploads/result');
+              $path = 'uploads/result/result_' . time() . '.' . $ext;
+              if($inputFile->saveAs(Yii::getAlias('@frontend') . '/web/' . $path))
+              {
+                $result = new ResultSlip();
+                $result->register_id = $regis->id;
+                $result->path = $path;
+                if($result->save())
+                {
+                  //PaymentStatus::AddStatus($regis->id,PaymentStatus::STATUS_WAIT_FOR_CHECK_PAYMENT);
+                  return $this->render('success_reusult', [
+                              'model' => $model,
+                              'result' => $result,
+                              'regis' => $regis,
+                            ]);
+                }
+              }
             }
-
-        }
-        return $this->render('results', [
+          }else{
+              Yii::$app->session->setFlash('danger', '<span class="fa fa-close" aria-hidden="true"></span>&nbsp;&nbsp; ไม่พบข้อมูลผู้ลงทะเบียนในระบบ');
+          }
+      }
+      return $this->render('results', [
                     'model' => $model,
                     //'register' => !empty($register) ? $register : null,
                     'modelVerify' => $modelVerify,
-
-        ]);
+                  ]);
     }
-
 }
