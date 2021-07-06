@@ -33,6 +33,7 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $zip
  * @property string $strava_acc
 
+
  *
  * @property Department $department
  * @property Group $group
@@ -316,6 +317,12 @@ class Register extends \yii\db\ActiveRecord
     public function getResultSlips()
     {
         return $this->hasMany(ResultSlip::className(), ['register_id' => 'id']);
+    }
+
+    public function getSumResult()
+    {
+        return ResultSlip::find()->where(['register_id' => $this->id])->sum('result');
+        //return $this->hasMany(ResultSlip::className(), ['register_id' => 'id']->sum('result'));
     }
 
     public function getListResultSlip()

@@ -207,20 +207,22 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
       </div>
     </div>
-      <div class="col-lg-12 col-md-12">
+
+    <div class="col-lg-12 col-md-12">
       <h3>
         <span class="fa fa-credit-card"></span>
-        ระยะการวิ่งรวม <?php echo $model->id; ?>
+          ระยะการวิ่งรวม <?php echo $model->sumResult; ?> กิโลเมตร
       </h3>
-    <?php foreach ($model->resultSlips as $key => $ResultSlips):?>
+        <?php foreach ($model->resultSlips as $key => $ResultSlips):?>
+      <div class="col-lg-3 col-md-3">
+        <span class="fa fa-calendar"></span> <?= Yii::$app->thaiFormatter->asDateTime($ResultSlips->created_at, 'medium') ?><br>
+      <!-- <?//= Html::a(Html::img(str_replace('/backend', '',Url::base(true)).'/'.$ResultSlips->path,['class' => 'img-rounded', 'style' => 'max-height: 120px;']),'',['class' => 'modal-pic','value' => str_replace('/backend', '',Url::base(true)).'/'.$ResultSlips->path]) ?> -->
+      <?= Html::a(Html::img(str_replace('/backend', '',Url::base(true)).'/'.$ResultSlips->path,['class' => 'img-rounded', 'style' => 'max-height: 120px;']),['recresult','id' => $ResultSlips->id],[]); ?>
+      </div>
 
-        <div class="col-lg-6 col-md-6">
-          <span class="fa fa-calendar"></span> <?= Yii::$app->thaiFormatter->asDateTime($ResultSlips->created_at, 'medium') ?><br>
-        <!-- <?//= Html::a(Html::img(str_replace('/backend', '',Url::base(true)).'/'.$ResultSlips->path,['class' => 'img-rounded', 'style' => 'max-height: 120px;']),'',['class' => 'modal-pic','value' => str_replace('/backend', '',Url::base(true)).'/'.$ResultSlips->path]) ?> -->
-        <?= Html::a(Html::img(str_replace('/backend', '',Url::base(true)).'/'.$ResultSlips->path,['class' => 'img-rounded', 'style' => 'max-height: 120px;']),['recresult','id' => $ResultSlips->id],[]); ?>
-        </div>
-     </div>
-    <?php endforeach; ?>
+        <?php endforeach; ?>
+    </div>
+
 
     <?php
         Modal::begin([
@@ -231,5 +233,4 @@ $this->params['breadcrumbs'][] = $this->title;
     ?>
     <div id="modalContent"></div>
     <?php Modal::end(); ?>
-
 </div>
