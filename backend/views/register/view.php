@@ -57,11 +57,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => 'ชื่องาน',
                     'value' => !empty($model->group_id) ? $model->group->name : '-'
                 ],
-                [
-                    'format' => 'html',
-                    'attribute' => 'id_card',
-                    'value' => $model->id_card
-                ],
+                // [
+                //     'format' => 'html',
+                //     'attribute' => 'id_card',
+                //     'value' => $model->id_card
+                // ],
                 [
                     'format' => 'html',
                     'label' => 'ชื่อ-สกุล',
@@ -211,13 +211,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-lg-12 col-md-12">
       <h3>
         <span class="fas fa-running"></span>
-          ระยะการวิ่งรวม <?php echo $model->sumResult; ?> กิโลเมตร
+          ระยะการวิ่งรวม
+          <?= !empty($model->sumResult) ? $model->sumResult : '0'; ?>
+           กิโลเมตร
       </h3>
         <?php foreach ($model->resultSlips as $key => $ResultSlips):?>
       <div class="col-lg-3 col-md-3">
         <span class="fa fa-calendar"></span> <?= Yii::$app->thaiFormatter->asDateTime($ResultSlips->created_at, 'medium') ?><br>
       <!-- <?//= Html::a(Html::img(str_replace('/backend', '',Url::base(true)).'/'.$ResultSlips->path,['class' => 'img-rounded', 'style' => 'max-height: 120px;']),'',['class' => 'modal-pic','value' => str_replace('/backend', '',Url::base(true)).'/'.$ResultSlips->path]) ?> -->
       <?= Html::a(Html::img(str_replace('/backend', '',Url::base(true)).'/'.$ResultSlips->path,['class' => 'img-rounded', 'style' => 'max-height: 120px;']),['recresult','id' => $ResultSlips->id],[]); ?>
+      <?= !empty($ResultSlips->result) ? '<span class="fa fa-check"></span> '.$ResultSlips->result : '<span class="fa fa-inbox"></span>'; ?>
       </div>
 
         <?php endforeach; ?>

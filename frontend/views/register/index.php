@@ -90,7 +90,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => 'ระยะการวิ่งสะสม (กม.)',
                     'format'=>'html',
                     'value'=>function($model){
-                      return !empty($model->sumResult) ? $model->sumResult : '-';
+                      return !empty($model->sumResult) ? $model->sumResult : '0';
                   }
                  ],
 

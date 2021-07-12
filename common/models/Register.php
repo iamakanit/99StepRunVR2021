@@ -325,6 +325,7 @@ class Register extends \yii\db\ActiveRecord
         //return $this->hasMany(ResultSlip::className(), ['register_id' => 'id']->sum('result'));
     }
 
+
     public function getListResultSlip()
     {
         return ResultSlip::findOne(ResultSlip::find()->where(['register_id' => $this->id])->max('id'));
