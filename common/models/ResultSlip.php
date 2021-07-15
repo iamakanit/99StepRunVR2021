@@ -65,6 +65,7 @@ class ResultSlip extends \yii\db\ActiveRecord
       $this->delete();
     }
 
+
     /**
      * @return \yii\db\ActiveQuery
      */
